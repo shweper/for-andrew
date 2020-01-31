@@ -1,0 +1,28 @@
+requestAnimationFrame(step00);
+var razstart = null; function step00(timestamp) {
+  var raz = Array.prototype.slice.call(document.querySelectorAll('input[type="text"], input:not([type])')).filter(function(a) {return a.offsetHeight > '5'});  // если текстовые поля больше 5px
+  if (!razstart) razstart = timestamp;
+  if (raz.length < 1) {  // пока таких полей не станет больше 5, повторять функцию (надёжнее чем задержка setTimeout и setInterval)
+    requestAnimationFrame(step00);
+  } else {  // когда таких полей станет больше 5, заполнить их
+    var arr = ['PHP', 'JavaScript', 'Python', 'Perl', 'Ruby', 'Go', 'Java'];
+    var rand = Math.floor(Math.random() * arr.length);
+    raz[0].value = arr[rand];
+    $('#text').submit(); // где текст нужно вписать id кнопки с решёткой в начале
+    raz[1].value = 'Наталья';
+    raz[2].value = 'Ивановна';
+    raz[3].value = '0000';
+    raz[4].value = '000000';
+    raz[5].value = 'ОТДЕЛОМ УФМС РОССИИ ПО ...';
+    raz[6].value = '01.01.2009';
+    for (var i = 0; i < 7; i++) {  // эмулировать (имитировать) действия посетителя
+      raz[i].dispatchEvent(new Event("change"));
+      raz[i].dispatchEvent(new Event("change"));
+      raz[i].dispatchEvent(new Event("keydown"));
+      raz[i].dispatchEvent(new Event("keyup"));
+    }
+    requestAnimationFrame(step01);  // запустить следующую функцию
+  }
+}
+
+
